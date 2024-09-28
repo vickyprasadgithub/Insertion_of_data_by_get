@@ -8,7 +8,10 @@ def insert_topic(request):
     tn=input('enter topicname')
     TO=Topic.objects.get_or_create(topic_name=tn)
     if TO[1]:
-        return HttpResponse('Topic is Created')
+        topics=Topic.objects.all()
+        d={'topics':topics}
+        return render(request,'display_topics.html',d)
+        #return HttpResponse('Topic is Created')
     else:
         return HttpResponse('Topic is already Exists')
 
@@ -43,7 +46,7 @@ def insert_webpage(request):
     return HttpResponse('Webpage is cReated')
 '''
 
-'''def insert_webpage(request):
+def insert_webpage(request):
     tn=input('enter tn')
     n=input('enter name')
     u=input('enter url')
@@ -53,9 +56,12 @@ def insert_webpage(request):
     if QLTO:
         TO=QLTO[0]
         WO=Webpage.objects.get_or_create(topic_name=TO,name=n,url=u,email=e)
-        return HttpResponse('Webpage is Created')
+        #return HttpResponse('Webpage is Created')
+        webpage=Webpage.objects.all()
+        d={'webpage':webpage}
+        return render(request,'display_webpage.html',d)
     else:
-        return HttpResponse('Dear User Given Topic is Not Avaialble')'''
+        return HttpResponse('Dear User Given Topic is Not Avaialble')
     
 
 def insert_accessrecord(request):
@@ -77,4 +83,18 @@ def insert_accessrecord(request):
             return HttpResponse('name(WO) is not exist')
     else:
         return HttpResponse('topicname(TO) is not exist')
+    
+
+
+def display_topics(request):
+    topics=Topic.objects.all()
+    d={'topics':topics}
+    return render(request,'display_topics.html',d)
+
+
+
+def display_webpage(request):
+    webpage=Webpage.objects.all()
+    d={'webpage':webpage}
+    return render(request,'display_webpage.html',d)
 
